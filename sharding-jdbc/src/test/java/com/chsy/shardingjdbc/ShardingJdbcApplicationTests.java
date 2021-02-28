@@ -2,8 +2,10 @@ package com.chsy.shardingjdbc;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.chsy.shardingjdbc.entity.Course;
+import com.chsy.shardingjdbc.entity.Udict;
 import com.chsy.shardingjdbc.entity.User;
 import com.chsy.shardingjdbc.mapper.CourseMapper;
+import com.chsy.shardingjdbc.mapper.UdictMapper;
 import com.chsy.shardingjdbc.mapper.UserMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +22,25 @@ class ShardingJdbcApplicationTests {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private UdictMapper udictMapper;
+
+    //=================测试公共表==================
+    @Test
+    void addUdict() {
+        Udict udict = new Udict();
+        udict.setUstatus("a");
+        udict.setUvalue("已启用");
+        udictMapper.insert(udict);
+    }
+
+    @Test
+    void deleteUdict() {
+        QueryWrapper<Udict> wrapper = new QueryWrapper<>();
+        wrapper.eq("dict_id", 572935979397021697L);
+        udictMapper.delete(wrapper);
+    }
 
     //=================测试垂直分库================
     @Test
